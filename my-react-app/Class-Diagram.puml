@@ -1,0 +1,83 @@
+@startuml
+title Kisan Sahayak - Class Diagram
+
+skinparam class {
+  BackgroundColor lightblue
+  BorderColor darkblue
+  ArrowColor darkgreen
+}
+
+class User {
+  -id: int
+  -name: string
+  -phone: string
+  -location: string
+  -language: string
+  +getProfile()
+  +updateLocation()
+}
+
+class Crop {
+  -id: int
+  -userId: int
+  -name: string
+  -sowingDate: date
+  -areaAcres: float
+  -growthStage: string
+  -progressPct: int
+  -advice: string
+  +calculateProgress()
+  +updateGrowth()
+}
+
+class Alert {
+  -id: int
+  -userId: int
+  -type: string
+  -title: string
+  -message: string
+  -isRead: boolean
+  +markRead()
+  +sendNotification()
+}
+
+class Scheme {
+  -id: int
+  -title: string
+  -description: string
+  -amount: float
+  -eligibility: string
+  +checkEligibility(user: User): bool
+}
+
+class MarketPrice {
+  -id: int
+  -cropName: string
+  -price: float
+  -change: string
+  -location: string
+  +getLatest(crop: string): float
+}
+
+class AIAdvisor {
+  -knowledgeBase: map
+  +analyzeCrop(crop: Crop): string
+  +translate(lang: string, text: string): string
+  +generateAdvice(): string
+}
+
+' Relationships
+User "1" *-- "0..*" Crop : owns
+User "1" *-- "0..*" Alert : receives
+User "1" }o-- "0..*" Scheme : eligible >
+Crop }o-- "0..*" MarketPrice : tracks
+Crop --> AIAdvisor : analyzed by
+Alert --> AIAdvisor : triggers
+
+note top of User : Farmer profile
+note bottom of AIAdvisor : Core intelligence\nHindi/English support
+
+@enduml
+
+Usage: Copy to https://www.plantuml.com/plantuml/uml/
+Class diagram from ER schema + app logic (React services)

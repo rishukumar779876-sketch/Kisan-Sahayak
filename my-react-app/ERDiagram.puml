@@ -1,0 +1,84 @@
+@startuml
+title Kisan Sahayak Database ER Diagram
+
+entity USER {
+  * id : int <<PK>>
+  --
+  name : string
+  phone : string
+  location : string
+  language : string
+  created_at : timestamp
+}
+
+entity CROP {
+  * id : int <<PK>>
+  --
+  user_id : int <<FK>>
+  name : string
+  sowing_date : date
+  area_acres : float
+  growth_stage : string
+  progress_pct : int
+  advice : string
+  updated_at : timestamp
+}
+
+entity SCHEME {
+  * id : int <<PK>>
+  --
+  title : string
+  description : string
+  category : string
+  amount : float
+  eligibility_criteria : string
+  tag : string
+}
+
+entity ALERT {
+  * id : int <<PK>>
+  --
+  user_id : int <<FK>>
+  type : string
+  title : string
+  message : string
+  read : boolean
+  created_at : timestamp
+}
+
+entity MARKET_PRICE {
+  * id : int <<PK>>
+  --
+  crop_name : string
+  price_per_quintal : float
+  change : string
+  location : string
+  updated_at : date
+}
+
+USER ||--o{ CROP : owns
+USER ||--o{ ALERT : receives
+CROP }o--o{ MARKET_PRICE : tracks_price
+USER }o--o{ SCHEME : check_eligibility
+
+note top of USER
+  Profile data, crop management
+end note
+
+note top of CROP
+  Farmer's active crops with growth tracking
+end note
+
+note top of SCHEME
+  Government schemes for farmers
+end note
+
+note top of ALERT
+  Weather, pest, market alerts
+end note
+
+@enduml
+
+' Usage / उपयोग:
+' Copy this code and paste at https://www.plantuml.com/plantuml/uml/
+' इस कोड को कॉपी करें और https://www.plantuml.com/plantuml/uml/ पर पेस्ट करें

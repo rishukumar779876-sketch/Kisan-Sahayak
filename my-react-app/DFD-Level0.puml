@@ -1,0 +1,36 @@
+@startuml
+title Kisan Sahayak - DFD Level 0 (Context Diagram)
+
+' External Entities
+actor "Farmer/User" as Farmer #gold
+actor "Weather API" as Weather #lightblue
+actor "Market Mandi" as Market #lightgreen
+actor "Govt Schemes DB" as Govt #orange
+
+' Central Process
+circle "Kisan Sahayak\nSystem" as System #lightcyan
+
+' Data Flows
+Farmer --> System : Crop Details\nGrowth Stage\nLocation
+System --> Farmer : Farming Advice\nCrop Progress\nAlerts
+Weather --> System : Weather Data\nPest Warnings
+Market --> System : Crop Prices\nMandi Rates
+Govt --> System : Scheme List\nEligibility Criteria
+System --> Farmer : Scheme Recommendations
+
+note right of System
+  DFD Level 0: High-level data flows\n
+  • Farmer inputs crop/location data
+  • System processes with external sources
+  • Outputs personalized advice/alerts/schemes
+end note
+
+note bottom of Farmer
+  Primary User:
+  Mithapur, Bihar farmers
+end note
+
+@enduml
+
+' Usage: Copy and paste at https://www.plantuml.com/plantuml/uml/
+' हिंदी: कोड कॉपी करें https://www.plantuml.com/plantuml/uml/ पर पेस्ट करें

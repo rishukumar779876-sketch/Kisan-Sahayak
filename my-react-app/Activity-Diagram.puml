@@ -1,0 +1,71 @@
+@startuml
+title Kisan Sahayak - Main Activity Flow (Farmer Crop Consultation)
+
+skinparam backgroundColor #FAFAFA
+skinparam activity {
+  BackgroundColor #E1F5FE
+  BorderColor #0277BD
+  FontSize 11
+}
+skinparam decision {
+  BackgroundColor #FFF3E0
+  BorderColor #F57C00
+}
+skinparam note {
+  BackgroundColor #E8F5E8
+}
+
+start
+
+:Farmer opens app;
+:Selects language (Hi/En);
+
+if (New crop?) then (yes)
+  :Enter crop name\nsowing date\narea\nlocation;
+  :Validate input;
+  if (Valid crop?) then (yes)
+    :Store to D1;
+  else (no)
+    :Show error;
+    stop
+  endif
+endif
+
+:Retrieve crops from D1;
+:Get weather from API;
+:Calculate growth stage\nprogress %;
+
+if (Alerts pending?) then (yes)
+  :Fetch from D2;
+  :Push notifications;
+endif
+
+:Get mandi prices from D4;
+:Check eligible schemes from D3;
+
+:AI Advisor generates response\n(crop advice + schemes + prices);
+:Display multilingual chat;
+
+if (Continue chat?) then (yes)
+  :Process farmer questions;
+  :Update advice;
+  :loop back
+else (no)
+  :Save chat history;
+endif
+
+:Logout / Home;
+
+stop
+
+note right
+  Complete user flow from login
+  to personalized farming 
+  consultation with alerts
+  & recommendations
+end note
+
+@enduml
+
+Usage: Copy to https://www.plantuml.com/plantuml/uml/
+Activity diagram showing end-to-end farmer interaction flow

@@ -1,0 +1,57 @@
+@startuml
+title Kisan Sahayak DFD Level 1 - Improved
+
+skinparam component {
+  BackgroundColor lightblue
+  BorderColor navy
+}
+skinparam actor {
+  BackgroundColor lightyellow
+}
+skinparam database {
+  BackgroundColor lightgreen
+}
+
+actor "Farmer" as F
+actor "Weather Service" as W
+actor "Market Service" as M
+actor "Govt Database" as G
+
+circle "1.0 Crop\nManagement" as P1
+circle "2.0 Alert\nSystem" as P2
+circle "3.0 Scheme\nEligibility" as P3
+circle "4.0 Price\nTracking" as P4
+circle "5.0 AI\nAdvisor" as P5
+
+database "D1 User & Crop Data" as D1
+database "D2 Alert Repository" as D2
+database "D3 Scheme Catalog" as D3
+database "D4 Market Prices" as D4
+
+F --> P1 : Crop details
+P1 --> D1 : Crop data
+D1 --> P1 : Stored crop data
+P1 --> P5 : Crop status
+
+W --> P2 : Weather data
+P2 --> D2 : Alert data
+D2 --> P2 : Stored alerts
+P2 --> F : Alerts
+
+M --> P4 : Price data
+P4 --> D4 : Price records
+D4 --> P4 : Stored prices
+P4 --> F : Price updates
+
+G --> P3 : Scheme data
+P3 --> D3 : Scheme records
+D3 --> P3 : Stored schemes
+D1 --> P3 : User data
+P3 --> F : Eligible schemes
+
+P2 --> P5 : Weather alerts
+P4 --> P5 : Market trends
+P3 --> P5 : Scheme insights
+P5 --> F : Advisory response
+
+@enduml
